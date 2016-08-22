@@ -1,4 +1,4 @@
 var component = require('./component');
 require('react');
 
-document.body.appendChild(component());
+document.body.appendChild(component())
