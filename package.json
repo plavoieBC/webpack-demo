@@ -1,23 +1,30 @@
 {
   "name": "webpack-demo",
   "version": "1.0.0",
-  "description": "X",
+  "description": "Webpack Tutorial Demo",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
     "build:watch": "webpack --watch",
     "build:display": "webpack --display-modules",
+    "stats": "webpack --profile --json > stats.json",
     "start": "webpack-dev-server"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "plavoieBC",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:plavoieBC/webpack-demo.git"
+  },
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.10",
     "css-loader": "^0.23.1",
     "extract-text-webpack-plugin": "^1.0.1",
+    "gh-pages": "^0.11.0",
     "html-webpack-plugin": "^2.22.0",
+    "purecss": "^0.6.0",
+    "purifycss-webpack-plugin": "^2.0.3",
     "style-loader": "^0.13.1",
     "webpack": "^1.13.2",
     "webpack-dev-server": "^1.15.0",

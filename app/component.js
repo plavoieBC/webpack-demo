@@ -1,5 +1,6 @@
 module.exports = function () {
     var element = document.createElement('h1');
-    element.innerHTML = 'Hello World!';
+    element.className = 'pure-button';
+    element.innerHTML = 'Hello Worlds!';
     return element;
 };
