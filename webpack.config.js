@@ -38,7 +38,7 @@ switch(process.env.npm_lifecycle_event) {
     default:
         config = merge(
             common,
-            { devtool: 'source-map' },
+            { devtool: 'eval-source-map' },
             parts.setupCSS(PATHS.app),
             parts.devServer({
                 host: process.env.HOST,
