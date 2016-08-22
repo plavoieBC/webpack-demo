@@ -6,7 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack",
-    "build:display": "webpack --display-modules"
+    "build:watch": "webpack --watch",
+    "build:display": "webpack --display-modules",
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +16,7 @@
   "devDependencies": {
     "html-webpack-plugin": "^2.22.0",
     "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0",
     "webpack-merge": "^0.14.1",
     "webpack-validator": "^2.2.7"
   }

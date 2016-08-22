@@ -3,6 +3,8 @@ const merge = require('webpack-merge');
 const validate = require('webpack-validator');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const parts = require('./libs/parts');
+
 const PATHS = {
     app: path.join(__dirname, 'app'),
     build: path.join(__dirname, 'build')
@@ -30,7 +32,12 @@ switch(process.env.npm_lifecycle_event) {
         config = merge(common, {});
         break;
     default:
-        config = merge(common, {});
+        config = merge(
+            common, 
+            parts.devServer({
+
+            })
+        );
 }
 
 module.exports = validate(config);
