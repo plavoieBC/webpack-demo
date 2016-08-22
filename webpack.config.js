@@ -39,6 +39,7 @@ switch(process.env.npm_lifecycle_event) {
                     chunkFilename: '[chunkhash].js'
                 }
             },
+            parts.clean(PATHS.build),
             parts.setFreeVariable(
                 'process.env.NODE_ENV',
                 'production'
@@ -47,8 +48,8 @@ switch(process.env.npm_lifecycle_event) {
                 name: 'vendor',
                 entries: ['react']
             }),
-            parts.minify(), 
-            parts.setupCSS(PATHS.app)    
+            parts.minify(),
+            parts.extractCSS(PATHS.app)    
         );
         break;
     default:
