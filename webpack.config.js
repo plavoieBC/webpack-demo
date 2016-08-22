@@ -35,7 +35,8 @@ switch(process.env.npm_lifecycle_event) {
         config = merge(
             common, 
             parts.devServer({
-
+                host: process.env.HOST,
+                port: process.env.PORT
             })
         );
 }
