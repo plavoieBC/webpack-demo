@@ -84,6 +84,20 @@ exports.setupCSS = function(paths) {
     };
 }
 
+exports.setupSASS = function(paths) {
+    return {
+        module: {
+            loaders: [
+                {
+                    test: /\.scss$/,
+                    loaders: ['style', 'css', 'sass'],
+                    include: paths
+                }
+            ]
+        }
+    };
+}
+
 exports.extractCSS = function(paths) {
     return {
         module: {
@@ -109,5 +123,35 @@ exports.purifyCSS = function(paths) {
                 paths: paths
             })
         ]
+    }
+}
+
+
+
+exports.setupFonts = function(paths) {
+    return {
+        module: {
+            loaders: [
+                {
+                    test: /\.woff$/,
+                    loader: 'url',
+                    query: {
+                        name: 'font/[hash].[ext]',
+                        limit: 5000,
+                        mimetype: 'application/font-woff'
+                    },
+                    include: paths
+                },
+                {
+                    test: /\.ttf$|\.eot$/,
+                    loader: 'file',
+                    query: {
+                        name: 'font/[hash].[ext]'
+                    },
+                    include: paths
+                }
+            ]
+        }
+        
     }
 }

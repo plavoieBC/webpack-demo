@@ -11,6 +11,7 @@ const PATHS = {
         path.join(__dirname, 'node_modules', 'purecss'),
         path.join(__dirname, 'app', 'style', 'main.css')
     ],
+    fonts: path.join(___dirname, 'app', 'style', 'fonts'),
     build: path.join(__dirname, 'build')
 };
 
