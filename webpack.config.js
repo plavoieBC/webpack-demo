@@ -57,14 +57,14 @@ switch(process.env.npm_lifecycle_event) {
             parts.extractBundle({
                 name: 'vendor',
                 entries: ['react', 'react-dom']
-            })
+            }),
+            parts.minify()
         );
         break;
     default:
         config = merge(
             common,
             { devtool: 'eval-source-map' },
-            parts.setupCSS(PATHS.style),
             parts.devServer({
                 host: process.env.HOST,
                 port: process.env.PORT
