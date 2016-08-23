@@ -9,6 +9,7 @@
     "build:display": "webpack --display-modules",
     "stats": "webpack --profile --json > stats.json",
     "start": "webpack-dev-server",
+    "test": "karma start",
     "test:lint": "eslint ./app --ext .js --ext .jsx"
   },
   "keywords": [],

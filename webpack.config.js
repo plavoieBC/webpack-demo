@@ -61,6 +61,14 @@ switch(process.env.npm_lifecycle_event) {
             parts.minify()
         );
         break;
+    case 'test':
+    case 'test:tdd':
+        config = merge(
+            common,
+            { devtool: 'inline-source-map' },
+            parts.loadJSX(PATHS.test)
+        );
+        break;
     default:
         config = merge(
             common,

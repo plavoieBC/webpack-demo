@@ -6,40 +6,23 @@ module.exports = function (config) {
         browsers: ['Chrome'],
         singleRun: true,
         frameworks: ['mocha'],
+        reporters: ['mocha'],
         files: [
-            { pattern: 'test/*_test.js', watched:false },
-            { pattern: 'test/**/*_test.js', watched:false }
+            'test/**/*_test.*'
         ],
         plugins: [
             'karma-chrome-launcher', 
             'karma-chai', 'karma-mocha',
             'karma-sourcemap-loader', 
-            'karma-webpack', 'karma-coverage',
+            'karma-webpack',
             'karma-mocha-reporter'
         ],
-        preProcessors: {
-            'test/*_test.js': ['webpack', 'sourcemap'],
-            'test/**/*_test.js': ['webpack', 'sourcemap']
+        preprocessors: {
+            'test/**/*_test.*': ['webpack', 'sourcemap']
         },
-        reporters: ['mocha', 'coverage'],
-        webpack: {
-            devtool: 'inline-source-map',
-            module: {
-                loaders: [
-                    { test: /\.js$/, loader: 'babel-loader' }
-                ],
-                preLoaders: [{
-                    test: /\.jsx?$/,
-                    include: path.resolve(__dirname, 'app', 'components'),
-                    loader: 'istanbul-instrumenter'
-                }]
-            }
-        },
-        webpackServer: {
-            noInfo: true //please don't spam the console when running in karma!
-        },
-        coverageReporter: {
-            type: 'text'
+        webpack: require('./webpack.config'),
+        webpackMiddleware: {
+            noInfo: true
         }
     });
 };
