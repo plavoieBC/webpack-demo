@@ -7,6 +7,9 @@ const parts = require('./libs/parts');
 const PATHS = {
     app: path.join(__dirname, 'app'),
     build: path.join(__dirname, 'build'),
+    style: [
+        path.join(__dirname, 'app', 'main.css')
+    ],
     test: path.join(__dirname, 'test')
 };
 
@@ -43,6 +46,7 @@ switch(process.env.npm_lifecycle_event) {
             common,
             { 
                 devtool: 'source-map',
+                entry: { style: PATHS.style },
                 output: {
                     path: PATHS.build,
                     filename: '[name].[chunkhash].js',
@@ -58,7 +62,8 @@ switch(process.env.npm_lifecycle_event) {
                 name: 'vendor',
                 entries: ['react', 'react-dom']
             }),
-            parts.minify()
+            parts.minify(),
+            parts.extractCSS(PATHS.style)
         );
         break;
     case 'test':
@@ -72,7 +77,11 @@ switch(process.env.npm_lifecycle_event) {
     default:
         config = merge(
             common,
-            { devtool: 'eval-source-map' },
+            { 
+                devtool: 'eval-source-map',
+                entry: { style: PATHS.style }
+            },
+            parts.setupCSS(PATHS.style),
             parts.devServer({
                 host: process.env.HOST,
                 port: process.env.PORT

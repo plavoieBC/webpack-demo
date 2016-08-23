@@ -12,7 +12,8 @@ module.exports = function (config) {
         ],
         plugins: [
             'karma-chrome-launcher', 
-            'karma-chai', 'karma-mocha',
+            'karma-chai', 
+            'karma-mocha',
             'karma-sourcemap-loader', 
             'karma-webpack',
             'karma-mocha-reporter'
