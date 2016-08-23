@@ -1,41 +1,38 @@
 const path = require('path');
 const merge = require('webpack-merge');
 const validate = require('webpack-validator');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const parts = require('./libs/parts');
 
 const PATHS = {
     app: path.join(__dirname, 'app'),
-    style: [
-        path.join(__dirname, 'node_modules', 'purecss'),
-        path.join(__dirname, 'app', 'style', 'main.css')
-    ],
-    fonts: path.join(___dirname, 'app', 'style', 'fonts'),
-    build: path.join(__dirname, 'build')
+    build: path.join(__dirname, 'build'),
+    test: path.join(__dirname, 'test')
 };
 
 const TARGET = process.env.npm_lifecycle_event;
-process.env.BABEL_ENV = PATHS.lifecycle;
+process.env.BABEL_ENV = TARGET;
 
-const common = {
-    entry: {
-        style: PATHS.style,
-        app: PATHS.app
+const common = merge(
+    {
+        entry: {
+            app: PATHS.app
+        },
+        output: {
+            path: PATHS.build,
+            filename: '[name].js'
+        },
+        resolve: {
+            extensions: ['', '.js', '.jsx']
+        },
     },
-    output: {
-        path: PATHS.build,
-        filename: '[name].js'
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: 'Webpack Demo'
-        })
-    ],
-    resolve: {
-        extensions: ['', '.js', '.jsx']
-    }
-};
+    parts.indexTemplate({
+        title: 'Webpack Demos',
+        template: './libs/index.html.ejs',
+        appMountId: 'root'
+    }),
+    parts.loadJSX(PATHS.app)
+);
 
 var config;
 
@@ -44,12 +41,10 @@ switch(process.env.npm_lifecycle_event) {
     case 'stats':
         config = merge(
             common,
-            parts.setupBabel(PATHS.app),
             { 
                 devtool: 'source-map',
                 output: {
                     path: PATHS.build,
-                    publicPath: '/webpack-demo/',
                     filename: '[name].[chunkhash].js',
                     chunkFilename: '[chunkhash].js'
                 }
@@ -61,11 +56,8 @@ switch(process.env.npm_lifecycle_event) {
             ),
             parts.extractBundle({
                 name: 'vendor',
-                entries: ['react']
-            }),
-            parts.minify(),
-            parts.extractCSS(PATHS.style),
-            parts.purifyCSS([PATHS.app])    
+                entries: ['react', 'react-dom']
+            })
         );
         break;
     default:

@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 exports.devServer = function(options) {
     return {
@@ -156,14 +157,39 @@ exports.setupFonts = function(paths) {
     }
 }
 
-exports.setupBabel = function(paths) {
+exports.indexTemplate = function(options) {
+    return {
+        plugins: [
+            new HtmlWebpackPlugin({
+                inject: true,
+                template: options.template,
+                title: options.title,
+                appMountId: options.appMountId
+            })
+        ]
+    };
+}
+
+exports.loadJSX = function(include) {
     return {
         module: {
-            loaders: [
+            loaders: [{
+                test: /\.(js|jsx)$/,
+                loader: 'babel',
+                include: include
+            }]
+        }
+    };
+}
+
+exports.lintJSX = function(include) {
+    return {
+        module: {
+            preLoaders: [
                 {
-                    test: /\.jsx?$/,
-                    loaders: ['babel?cacheDirectory'],
-                    include: paths
+                    test: /\.(js|jsx)$/,
+                    loaders: ['eslint'],
+                    include: include
                 }
             ]
         }
