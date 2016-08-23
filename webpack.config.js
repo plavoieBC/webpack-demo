@@ -15,6 +15,9 @@ const PATHS = {
     build: path.join(__dirname, 'build')
 };
 
+const TARGET = process.env.npm_lifecycle_event;
+process.env.BABEL_ENV = PATHS.lifecycle;
+
 const common = {
     entry: {
         style: PATHS.style,
@@ -28,7 +31,10 @@ const common = {
         new HtmlWebpackPlugin({
             title: 'Webpack Demo'
         })
-    ]
+    ],
+    resolve: {
+        extensions: ['', '.js', '.jsx']
+    }
 };
 
 var config;
@@ -38,6 +44,7 @@ switch(process.env.npm_lifecycle_event) {
     case 'stats':
         config = merge(
             common,
+            parts.setupBabel(PATHS.app),
             { 
                 devtool: 'source-map',
                 output: {

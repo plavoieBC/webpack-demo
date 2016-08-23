@@ -155,3 +155,17 @@ exports.setupFonts = function(paths) {
         
     }
 }
+
+exports.setupBabel = function(paths) {
+    return {
+        module: {
+            loaders: [
+                {
+                    test: /\.jsx?$/,
+                    loaders: ['babel?cacheDirectory'],
+                    include: paths
+                }
+            ]
+        }
+    };
+}
