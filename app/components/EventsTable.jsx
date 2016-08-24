@@ -2,11 +2,42 @@ import React from 'react';
 import {Table, Column, Cell} from 'fixed-data-table';
 import EventsDataMockStore from '../stores/EventsDataMockStore.js';
 
-const TextCell = ({rowIndex, data, col, ...props}) => (
-    <Cell {...props}>
-        {data.getObjectAt(rowIndex)[col]}
-    </Cell>
-);
+class TextCell extends React.Component {
+    render() {
+        const {rowIndex, data, field, ...props} = this.props;
+        return (
+            <Cell {...props}>
+                {data.getObjectAt(rowIndex)[field]}
+            </Cell>
+        );
+    }
+}
+
+class LinkCell extends React.Component {
+    render() {
+        const {rowIndex, data, field, link, ...props} = this.props;
+
+        return (
+            <Cell {...props}>
+                <a href={data.getObjectAt(rowIndex)[link]}>
+                    {data.getObjectAt(rowIndex)[field]}
+                </a>
+            </Cell>
+        );
+    }
+}
+
+class DateCell extends React.Component {
+    render() {
+        const {rowIndex, data, field, ...props} = this.props;
+        
+        return (
+            <Cell {...props}>
+                {new Date(data.getObjectAt(rowIndex)[field]).toLocaleDateString('en-CA')}
+            </Cell>
+        );
+    }
+}
 
 class EventsTable extends React.Component {
     constructor(props) {
@@ -26,12 +57,32 @@ class EventsTable extends React.Component {
                 headerHeight={50}
                 rowsCount={dataList.getSize()}
                 width={1300}
-                height={500}
+                height={300}
                 {...this.props}>
                 <Column 
-                    header={<Cell>Name</Cell>}
-                    cell={<TextCell data={dataList} col="name" />}
+                    header={<Cell>ID</Cell>}
+                    cell={<LinkCell data={dataList} field="name" link="url"/>}
                     width={140}
+                />
+                <Column 
+                    header={<Cell>Event</Cell>}
+                    cell={<TextCell data={dataList} field="headline" />}
+                    width={150}
+                />
+                <Column 
+                    header={<Cell>Description</Cell>}
+                    cell={<TextCell data={dataList} field="description"/>}
+                    width={400}
+                />
+                <Column 
+                    header={<Cell>Created</Cell>}
+                    cell={<DateCell data={dataList} field="created"/>}
+                    width={120}
+                />
+                <Column 
+                    header={<Cell>Updated</Cell>}
+                    cell={<DateCell data={dataList} field="updated"/>}
+                    width={120}
                 />
             </Table>
         );
