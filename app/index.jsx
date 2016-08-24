@@ -1,9 +1,17 @@
 import React from 'react';
 import {render} from 'react-dom';
 
+import EventsTable from './components/EventsTable';
+
 class App extends React.Component {
     render () {
-        return <h1>Hello!</h1>;
+        return (
+            <div>
+                <h1>Webpack Test Demo</h1>
+                <hr/>
+                <EventsTable />
+            </div>
+        );
     }
 }
 

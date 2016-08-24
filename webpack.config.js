@@ -8,7 +8,8 @@ const PATHS = {
     app: path.join(__dirname, 'app'),
     build: path.join(__dirname, 'build'),
     style: [
-        path.join(__dirname, 'app', 'main.css')
+        path.join(__dirname, 'app', 'main.css'),
+        path.resolve(__dirname, 'node_modules/fixed-data-table/dist/fixed-data-table.min.css')
     ],
     test: path.join(__dirname, 'test')
 };

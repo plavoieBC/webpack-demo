@@ -5,11 +5,12 @@
         "es6": true,
         "node": true
     },
-    "extends": "eslint:recommended",
+    "extends": ["eslint:recommended", "plugin:react/recommended"],
     "parserOptions": {
         "ecmaFeatures": {
             "experimentalObjectRestSpread": true,
-            "jsx": true
+            "jsx": true,
+            "classes": true
         },
         "sourceType": "module"
     },
@@ -32,6 +33,7 @@
         "semi": [
             "error",
             "always"
-        ]
+        ],
+        "react/jsx-uses-vars": [2]
     }
 }
