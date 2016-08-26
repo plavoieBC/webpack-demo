@@ -4,7 +4,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const PurifyCSSPlugin = require('purifycss-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-exports.devServer = function(options) {
+exports.devServer = function (options) {
     return {
         devServer: {
             // HTML5 History API Routing Support
@@ -24,7 +24,7 @@ exports.devServer = function(options) {
     };
 }
 
-exports.minify = function() {
+exports.minify = function () {
     return {
         plugins: [
             new webpack.optimize.UglifyJsPlugin({
@@ -36,7 +36,7 @@ exports.minify = function() {
     };
 }
 
-exports.setFreeVariable = function(key, value) {
+exports.setFreeVariable = function (key, value) {
     const env = {};
     env[key] = JSON.stringify(value);
 
@@ -47,7 +47,7 @@ exports.setFreeVariable = function(key, value) {
     };
 }
 
-exports.extractBundle = function(options) {
+exports.extractBundle = function (options) {
     const entry = {};
     entry[options.name] = options.entries;
 
@@ -61,7 +61,7 @@ exports.extractBundle = function(options) {
     };
 }
 
-exports.clean = function(path) {
+exports.clean = function (path) {
     return {
         plugins: [
             new CleanWebpackPlugin([path], {
@@ -71,7 +71,7 @@ exports.clean = function(path) {
     };
 }
 
-exports.setupCSS = function(paths) {
+exports.setupCSS = function (paths) {
     return {
         module: {
             loaders: [
@@ -85,7 +85,7 @@ exports.setupCSS = function(paths) {
     };
 }
 
-exports.setupSASS = function(paths) {
+exports.setupSASS = function (paths) {
     return {
         module: {
             loaders: [
@@ -99,7 +99,7 @@ exports.setupSASS = function(paths) {
     };
 }
 
-exports.extractCSS = function(paths) {
+exports.extractCSS = function (paths) {
     return {
         module: {
             loaders: [
@@ -107,7 +107,7 @@ exports.extractCSS = function(paths) {
                     test: /\.css$/,
                     loader: ExtractTextPlugin.extract('style', 'css'),
                     include: paths
-                }    
+                }
             ]
         },
         plugins: [
@@ -116,7 +116,7 @@ exports.extractCSS = function(paths) {
     };
 }
 
-exports.purifyCSS = function(paths) {
+exports.purifyCSS = function (paths) {
     return {
         plugins: [
             new PurifyCSSPlugin({
@@ -129,7 +129,7 @@ exports.purifyCSS = function(paths) {
 
 
 
-exports.setupFonts = function(paths) {
+exports.setupFonts = function (paths) {
     return {
         module: {
             loaders: [
@@ -153,11 +153,10 @@ exports.setupFonts = function(paths) {
                 }
             ]
         }
-        
-    }
-}
+    };
+};
 
-exports.indexTemplate = function(options) {
+exports.indexTemplate = function (options) {
     return {
         plugins: [
             new HtmlWebpackPlugin({
@@ -170,22 +169,28 @@ exports.indexTemplate = function(options) {
     };
 }
 
-exports.loadJSX = function(include) {
+exports.loadJSX = function (include) {
     return {
         module: {
             loaders: [{
                 test: /\.(js|jsx)$/,
                 loader: 'babel',
                 query: {
-                    presets: ['es2015', 'react', 'stage-2']
+                    presets: ['es2015', 'react', 'stage-2', 'airbnb']
                 },
                 include: include
             }]
+        },
+        externals: {
+            'cheerio': 'window',
+            'react/addons': true,
+            'react/lib/ExecutionEnvironment': true,
+            'react/lib/ReactContext': true
         }
     };
-}
+};
 
-exports.lintJSX = function(include) {
+exports.lintJSX = function (include) {
     return {
         module: {
             preLoaders: [
@@ -197,4 +202,14 @@ exports.lintJSX = function(include) {
             ]
         }
     };
-}
+};
+
+exports.loadTestExternals = function () {
+    return {
+        externals: {
+            'cheerio': 'window',
+            'react/lib/ExecutionEnvironment': true,
+            'react/lib/ReactContext': true
+        }
+    };
+};

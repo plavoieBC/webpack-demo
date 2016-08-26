@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Table, Column, Cell} from 'fixed-data-table';
 import EventsDataMockStore from '../stores/EventsDataMockStore.js';
 
@@ -12,7 +12,7 @@ class TextCell extends React.Component {
         );
     }
 }
-
+                
 class LinkCell extends React.Component {
     render() {
         const {rowIndex, data, field, link, ...props} = this.props;
@@ -34,6 +34,19 @@ class DateCell extends React.Component {
         return (
             <Cell {...props}>
                 {new Date(data.getObjectAt(rowIndex)[field]).toLocaleDateString('en-CA')}
+            </Cell>
+        );
+    }
+}
+
+class DirectionCell extends React.Component {
+    render() {
+        const {rowIndex, data, field1, field2, ...props} = this.props;
+        const entry = data.getObjectAt(rowIndex)[0];
+
+        return (
+            <Cell {...props}>
+                {entry[field1]} {entry[field2]}
             </Cell>
         );
     }
@@ -80,7 +93,7 @@ class EventsTable extends React.Component {
                     width={120}
                 />
                 <Column 
-                    header={<Cell>Updated</Cell>}
+                    header={<Cell>Renewed</Cell>}
                     cell={<DateCell data={dataList} field="updated"/>}
                     width={120}
                 />

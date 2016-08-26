@@ -27,7 +27,8 @@ const common = merge(
             filename: '[name].js'
         },
         resolve: {
-            extensions: ['', '.js', '.jsx']
+            extensions: ['', '.js', '.jsx'],
+            modulesDirectories: ['node_modules', 'app']
         },
     },
     parts.indexTemplate({

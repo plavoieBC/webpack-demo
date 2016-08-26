@@ -1,29 +1,39 @@
-var webpack = require('webpack');
-var path = require('path');
-
-module.exports = function (config) {
+module.exports = function(config) {
     config.set({
         browsers: ['Chrome'],
-        singleRun: true,
-        frameworks: ['mocha'],
+        frameworks: ['jasmine'],
         reporters: ['mocha'],
+        mochaReporter: {
+            output: 'noFailures'
+        },
         files: [
-            'test/**/*_test.*'
-        ],
-        plugins: [
-            'karma-chrome-launcher', 
-            'karma-chai', 
-            'karma-mocha',
-            'karma-sourcemap-loader', 
-            'karma-webpack',
-            'karma-mocha-reporter'
+            'test/**/*.spec.*'
         ],
         preprocessors: {
-            'test/**/*_test.*': ['webpack', 'sourcemap']
+            'app/**/*.js': ['webpack', 'sourcemap'],
+            'test/**/*.js': ['webpack', 'sourcemap']
         },
         webpack: require('./webpack.config'),
-        webpackMiddleware: {
+        webpackServer: {
             noInfo: true
-        }
+        },
+        plugins: [
+            'karma-webpack',
+            'karma-jasmine',
+            'karma-sourcemap-loader',
+            'karma-chrome-launcher',
+            'karma-phantomjs-launcher',
+            'karma-spec-reporter',
+            'karma-mocha-reporter'
+        ],
+        babelPreprocessor: {
+            options: {
+                presets: ['airbnb']
+            }
+        },
+        port: 8081,
+        colors: true,
+        autoWatch: true,
+        singleRun: false
     });
 };
